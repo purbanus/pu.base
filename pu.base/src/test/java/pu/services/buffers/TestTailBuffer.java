@@ -1,6 +1,5 @@
 package pu.services.buffers;
 
-import static org.assertj.core.api.Assertions.fail;
 import static org.junit.Assert.*;
 
 import org.junit.Test;
