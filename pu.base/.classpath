@@ -13,8 +13,6 @@
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.module.container"/>
 	<classpathentry exported="true" kind="lib" path="/alg.lib/lib/iris-standaard/jt400.jar"/>
 	<classpathentry exported="true" kind="con" path="org.apache.ivyde.eclipse.cpcontainer.IVYDE_CONTAINER/?project=pu.base&amp;ivyXmlPath=ivy.xml&amp;confs=*"/>
-	<classpathentry exported="true" kind="lib" path="lib/mcadhoc.jar"/>
-	<classpathentry exported="true" kind="lib" path="lib/swingx-0.9.1.jar" sourcepath="lib/swingx-0.9.1-src.zip"/>
 	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/iris-standaard"/>
 	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Apache Tomcat v9.0">
 		<attributes>
