@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd">
+
+<!--
+  - Application context voor mijn testjes
+  -->
+
+<beans>
+
+	<!-- Configurer that replaces ${...} placeholders with values from a properties file -->
+	<!-- (in this case, JDBC-related settings for the dataSource definition below) -->
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>pu/db/hsqldb-mem.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<!-- Kleinigheidje: Bij c3p0 is het driverClass, jdbcUrl, user, 
+	     en bij DriverManagerDataSource is het driverClassName, url en username
+	-->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="${jdbc.driverClassName}"/>
+		<property name="url"             value="${jdbc.url}"/>
+		<property name="username"        value="${jdbc.username}"/>
+		<property name="password"        value="${jdbc.password}"/>
+	</bean>
+	
+	<!-- Transaction manager for a single JDBC DataSource -->
+	<bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"/>
+	</bean>
+
+	<bean id="limitHandler" class="pu.services.seq.db.JdbcLimitHandler">
+		<constructor-arg>
+			<ref bean="transactionManager" />
+		</constructor-arg>
+		<constructor-arg>
+			<ref bean="dataSource"/>
+		</constructor-arg>
+		<constructor-arg>
+			<value>3</value>
+		</constructor-arg>
+	</bean>
+
+	<bean id="sequenceManager" class="pu.services.seq.SequenceManager">
+		<constructor-arg>
+			<ref bean="limitHandler" />
+		</constructor-arg>
+	</bean>
+
+	<bean id="hsqldbSequenceHelper" class="pu.services.seq.db.HsqldbSequenceHelper">
+		<property name="dataSource">
+			<ref bean="dataSource"/>
+		</property>
+	</bean>
+
+</beans>      

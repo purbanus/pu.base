@@ -1,0 +1,16 @@
+Logging gestart op Fri Dec 15 21:03:54 CET 2023
+21:03:54 193 Info : [main] Informatie: in Rusland wonen op dit moment ongeveer 177.892.654,73 mensen.
+Bevallende vrouwen zijn hierin meegeteld, vandaar de cijfers achter de komma.
+21:03:54 257 Debug: [main] Ik ben er (gaap...)
+21:03:54 257 Info : [main] Informatie: in Rusland wonen op dit moment ongeveer 177.892.654,73 mensen.
+Bevallende vrouwen zijn hierin meegeteld, vandaar de cijfers achter de komma.
+java.lang.Exception: Hier is een exception
+		at pu.log.log2.TestLog.maakException(TestLog.java:53)
+		at pu.log.log2.TestLog.verwerk(TestLog.java:26)
+		at pu.log.log2.TestLog.main(TestLog.java:15)
+21:03:54 259 Error: [main] Ik ben er (gaap...)
+java.lang.Exception: Hier is een exception
+		at pu.log.log2.TestLog.maakException(TestLog.java:53)
+		at pu.log.log2.TestLog.verwerk(TestLog.java:26)
+		at pu.log.log2.TestLog.main(TestLog.java:15)
+21:03:54 260 Info : [main] Nu schakelen we over op log4j logging

@@ -1,0 +1,113 @@
+JAVA + SSL Tutorial (server and client examples)
+
+Certificate
+
+First we need to make certificate, this is done by using keytool that is part of J2SE SDK (program will ask for certificate owner information and password, enter 123456 as password, or you can enter your password, but notice that you have to change it in other commands listen in this tutorial):
+
+keytool -genkey -keystore mySrvKeystore -keyalg RSA
+
+After this command you will have certificate file in working directory of issuing keytool command.
+
+Server source code (EchoServer.java)
+
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
+import java.io.BufferedReader;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+
+public
+class EchoServer {
+    public
+            static
+    void
+            main(String[] arstring) {
+        try {
+            SSLServerSocketFactory sslserversocketfactory =
+                    (SSLServerSocketFactory) SSLServerSocketFactory.getDefault();
+            SSLServerSocket sslserversocket =
+                    (SSLServerSocket) sslserversocketfactory.createServerSocket(9999);
+            SSLSocket sslsocket = (SSLSocket) sslserversocket.accept();
+
+            InputStream inputstream = sslsocket.getInputStream();
+            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+            BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+
+            String string = null;
+            while ((string = bufferedreader.readLine()) != null) {
+                System.out.println(string);
+                System.out.flush();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+}
+      
+
+Compile it by using simple command:
+
+javac EchoServer.java
+
+Client source code (EchoClient.java)
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+import java.io.*;
+
+public
+class EchoClient {
+    public
+            static
+    void
+            main(String[] arstring) {
+        try {
+            SSLSocketFactory sslsocketfactory = (SSLSocketFactory) SSLSocketFactory.getDefault();
+            SSLSocket sslsocket = (SSLSocket) sslsocketfactory.createSocket("localhost", 9999);
+
+            InputStream inputstream = System.in;
+            InputStreamReader inputstreamreader = new InputStreamReader(inputstream);
+            BufferedReader bufferedreader = new BufferedReader(inputstreamreader);
+
+            OutputStream outputstream = sslsocket.getOutputStream();
+            OutputStreamWriter outputstreamwriter = new OutputStreamWriter(outputstream);
+            BufferedWriter bufferedwriter = new BufferedWriter(outputstreamwriter);
+
+            String string = null;
+            while ((string = bufferedreader.readLine()) != null) {
+                bufferedwriter.write(string + '\n');
+                bufferedwriter.flush();
+            }
+        } catch (Exception exception) {
+            exception.printStackTrace();
+        }
+    }
+}
+      
+
+Compile it by using simple command:
+
+javac EchoClient.java
+
+Running server and client using SSL
+
+First copy certificate file that you created before into working directory and run server with these parameters (notice that you have to change keyStore name and/or trustStrorePassword if you specified different options creating certificate:
+
+java -Djavax.net.ssl.keyStore=mySrvKeystore -Djavax.net.ssl.keyStorePassword=123456 EchoServer
+
+And now again copy certificate file that you created before into working directory and run client with these parameters (notice that you have to change keyStore name and/or trustStrorePassword if you specified different options creating certificate:
+
+java -Djavax.net.ssl.trustStore=mySrvKeystore -Djavax.net.ssl.trustStorePassword=123456 EchoClient
+
+If you want SSL debug information just add these parameters when running server and/or client:
+
+-Djava.protocol.handler.pkgs=com.sun.net.ssl.internal.www.protocol -Djavax.net.debug=ssl
+
+Playing with server and client
+
+Now just type any string on client console and press return. The same string has to appear on server console.
+
+Copyright
+
+This document is copyrighted to Tomas Vilda. You can use it in all ways, but don't change this section and allways include it.
