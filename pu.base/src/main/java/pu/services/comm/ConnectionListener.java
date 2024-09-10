@@ -30,4 +30,11 @@ public abstract void run();
  */
 public abstract void stop();
 
+/**
+ * The name that is to be used when logging start/stop events. This is usually someting like
+ * "Log4jListener" so that we would log "Log4jListener started"
+ * @return The name that is to be used when logging start/stop events
+ */
+public abstract String getLogName();
+
 }
