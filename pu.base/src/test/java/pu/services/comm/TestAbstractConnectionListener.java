@@ -122,7 +122,7 @@ protected Session createSession( TcpSocket aSocket )
 }
 
 @Override
-protected String getLogName()
+public String getLogName()
 {
 	return "logname";
 }
