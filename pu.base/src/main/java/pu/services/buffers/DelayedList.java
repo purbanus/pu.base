@@ -8,11 +8,11 @@ import java.util.List;
 import javax.swing.Timer;
 
 /**
- * DelayedStringBuffer maintains a StringBuffer that you can append to with
+ * DelayedList maintains a List that you can append to with
  * <code>append</code>. This starts a timer, and when the timer goes off, the
- * text in the stringbuffer, including text that arrived after the timer started,
+ * objects in the list, including objects that arrived after the timer started,
  * is made available to users by calling the abstract method <code>newData</code>.
- * Note that after calling newData, the buffer is cleared.
+ * Note that after calling newData, the list is cleared.
  * <p>
  * The motivation for this class was the scrolling behaviour of TextArea and JTextArea.
  * If you rapidly append strings to either of these, they scroll up and down so fast
@@ -24,30 +24,30 @@ import javax.swing.Timer;
  * <p>
  * Multithread remarks
  * <p>
- * Multiple threads may write to the buffer at unpredictable times. Due to the unpredictability
+ * Multiple threads may write to the list at unpredictable times. Due to the unpredictability
  * of thread scheduling (not to name platform differences), the order in which the output appears
- * in the buffer is somewhat random. More specifically, suppose a number of threads is writing
- * timestamps into the buffer, some of those timestamps will appear out of order. If you need
+ * in the list is somewhat random. More specifically, suppose a number of threads is writing
+ * timestamps into the list, some of those timestamps will appear out of order. If you need
  * stronger assurances of sequencing, you need to develop your own class. Perhaps overriding
  * <code>append</code> to generate timestamps internally would be something. Of course, when
- * only one thread writes to the buffer, there is no problem.
+ * only one thread writes to the listr, there is no problem.
  * <p>
  * So there may be multiple write-threads, and the timer runs on its
  * own thread. The following rules must be observed:
  * <ul>
  * <li> The <code>append</code> method(s) should be fully synchronized
  * <li> The <code>flush</code> method should lock only long enough to obtain a snapshot of
- * the buffer and clear it. It must also be private, as is explained further on.
+ * the list and clear it. It must also be private, as is explained further on.
  * <li> <code>newData</code> is an open method, so it may only be called when no locks are held.
  * Bear in mind that the <code>newData</code> message is probably sent to the same class that
  * is calling <code>append</code>.
  * </ul>
- * If you want to retire a DelayedStringBuffer, simply stop sending it data and wait for
+ * If you want to retire a DelayedList, simply stop sending it data and wait for
  * the last <code>newData</code> message. Providing a public <code>flush<code> method that
  * would cause one final <code>newData</code> message would greatly complicate things:
  * <ul>
  * <li> A race develops between the timer thread and the thread that calls <code>flush</code>
- * If the timer thread wins part of the race and obtains some buffer data, there is no telling
+ * If the timer thread wins part of the race and obtains some list data, there is no telling
  * when it will actually deliver the data. This would violate the expected semantics of 
  * <code>flush</code>, namely that all data is delivered when <code>flush</code> finishes.
  * <li> A race develops between the thread(s) that append data, and the timer thread and
@@ -70,11 +70,11 @@ public abstract class DelayedList
 	private final Timer timer;
 
 	/**
-	 * The buffer that accumulates text
+	 * The list that accumulates text
 	 */
 	private List<Object> data = new ArrayList<>();
 /**
- * Creates a new DelayedStringBuffer with the specified delay.
+ * Creates a new DelayedList with the specified delay.
  */
 public DelayedList( int aDelay )
 {
@@ -91,7 +91,7 @@ public DelayedList( int aDelay )
 	});
 }
 /**
- * Appends the specified string to the internal buffer. If the timer is currently
+ * Appends the specified string to the internal list. If the timer is currently
  * not running, it is started.
  */
 public synchronized void append( Object s )
@@ -140,8 +140,8 @@ public synchronized void append( Object s )
 	}
 }
 /**
- * Called when the timer goes off. Retrieves the content of the buffer,
- * clears it and calls newData if there was anything in the buffer.
+ * Called when the timer goes off. Retrieves the content of the list,
+ * clears it and calls newData if there was anything in the list.
  */
 private void flush()
 {
@@ -162,7 +162,7 @@ private void flush()
 }
 /**
  * Called when the timer goes off. Only called with
- * non-empty strings and with synchronisatuin off.
+ * a non-empty list and with synchronisatuin off.
  */
 protected abstract void newData( List<Object> s );
 }
