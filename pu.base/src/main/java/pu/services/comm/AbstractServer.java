@@ -72,10 +72,9 @@ public void setConnectionListeners( List<ConnectionListener> aConnectionListener
 @Override
 public final void run()
 {
-	for ( Object element : getConnectionListeners() )
+	for ( ConnectionListener connectionListener: getConnectionListeners() )
 	{
-		AbstractConnectionListener abstractConnectionListener = (AbstractConnectionListener) element;
-		Thread thr = new Thread( abstractConnectionListener, abstractConnectionListener.getLogName() );
+		Thread thr = new Thread( connectionListener, connectionListener.getLogName() );
 
 		// LOW It doesn't seem useful to give these threads a high priority, since they handle
 		//      connection events, and a little delay doen't matter then.

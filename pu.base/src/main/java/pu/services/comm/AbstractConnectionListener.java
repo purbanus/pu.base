@@ -388,13 +388,6 @@ public void stop()
 protected abstract Session createSession( TcpSocket aSocket );
 
 /**
- * The name that is to be used when logging start/stop events. This is usually someting like
- * "Log4jListener" so that we would log "Log4jListener started"
- * @return The name that is to be used when logging start/stop events
- */
-protected abstract String getLogName();
-
-/**
  * Returns the prefix that is to be for the thread name for session threads that we create.
  * We simply append the session id so the thread name would be something like "Log4jSession-12345".
  *
