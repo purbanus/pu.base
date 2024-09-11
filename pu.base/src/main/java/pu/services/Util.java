@@ -6,6 +6,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.math.BigDecimal;
 import java.math.BigInteger;
+import java.util.Arrays;
+import java.util.Comparator;
 import java.util.List;
 
 import javax.swing.ImageIcon;
@@ -422,8 +424,18 @@ public static void listThreads( PrintWriter aWriter, Class<?> fromClass, boolean
 	
 	// Druk alle threads af
 	listThreadGroup( aWriter, systemGroup, "", detail );
-
-
+}
+public static void printClassPath()
+{
+	String classPathString = System.getProperty( "java.class.path" );
+	String [] classPathSplit = classPathString.split( ":" );
+	List<String> classPathList = Arrays.asList( classPathSplit );
+	classPathList.sort(  Comparator.comparing( String::toString ) );
+	for ( String entry : classPathList )
+	{
+		System.out.println( entry );
+	}
+	
 }
 @Deprecated
 public static void safeExit()
