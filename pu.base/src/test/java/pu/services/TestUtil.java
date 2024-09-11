@@ -182,7 +182,7 @@ public void testListThreads()
 	}
 }
 
-//@Test
+@Test
 public void testGetStackTrace()
 {
 	String [] expected = new String []
