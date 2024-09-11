@@ -11,7 +11,8 @@ public class TestHelper
 	/**
 	 * The root of the directory with testcases
 	 */
-private static final String TESTROOT = ( Util.isWindows() ? "C:\\projecten\\iris\\Testcases\\" : "/home/purbanus/projecten/iris/Testcases/"  );
+public static final String USER_NAME = System.getProperty(  "user.name" );
+private static final String TESTROOT = ( Util.isWindows() ? "C:\\projecten\\iris\\Testcases\\" : "/home/" + USER_NAME + "/projecten/iris/Testcases/"  );
 
 /**
  * Returns the default testcase file for a particular method of a particular class.

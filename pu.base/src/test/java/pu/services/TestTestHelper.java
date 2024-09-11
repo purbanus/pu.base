@@ -23,7 +23,8 @@ public void testBasics()
 	}
 	else
 	{
-		expectedPath = "/home/purbanus/projecten/iris/Testcases/pu.services.TestTestHelper/";
+		String userName = System.getProperty(  "user.name" );
+		expectedPath = "/home/" + userName + "/projecten/iris/Testcases/pu.services.TestTestHelper/";
 	}
 
 	assertEquals( expectedPath, th.getTestCaseRoot( this ) );
