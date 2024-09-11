@@ -123,6 +123,7 @@ private void fireZipError( File aFile, Exception aException )
 /////////////////////////////////////////////////////////////////////////////////////////////////
 // Work
 
+@Override
 public void run()
 {
 	try
@@ -148,6 +149,7 @@ public void run()
 /**
  * This method is called for each file that the fileproducer discovers.
  */
+@Override
 public void update( Observable o, Object arg )
 {
 	File file = (File) arg;

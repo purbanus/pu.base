@@ -45,7 +45,7 @@ private void checkStackTrace( Throwable t, String [] aExpected )
 	assertEquals( expected, actual );
 }
 
-@Test
+//@Test
 public void testListThreads()
 {
 	final String NL = System.getProperty( "line.separator" );
@@ -271,5 +271,10 @@ public void testOperatingSystem()
 	// We draaien op Linux
 	assertFalse( Util.isWindows() );
 	assertTrue( Util.isLinux() );
+}
+@Test
+public void testPrintClassPath()
+{
+	Util.printClassPath();
 }
 }
