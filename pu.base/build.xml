@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<project name="pu.base" basedir="." default="build"
+>
+	<property file="build.properties" />
+
+	<patternset id="jar-excludes">
+		<exclude name="**/test/**/*.*" />
+		<exclude name="**/cradle/**/*.*" />
+		<exclude name="**/grave/**/*.*" />
+		<exclude name="**/tryout/**/*.*" />
+		<exclude name="**/adhoc/**/*.*" />
+		<exclude name="**/*.txt" />
+		<exclude name="log4j.properties" />
+		<exclude name="log4j.xml" />
+	</patternset>
+
+	<!-- ============================================================== -->
+	<!-- Usage                                                          -->
+	<!-- ============================================================== -->
+
+	<target name="usage">
+		<echo message="" />
+		<echo message="${projectname} jar build file" />
+		<echo message="-----------------------------------" />
+		<echo message="" />
+		<echo message="Available targets are:" />
+		<echo message="" />
+		<echo message="build --> Build the application" />
+	</target>
+
+	<!-- ============================================================== -->
+	<!-- Initialize                                                     -->
+	<!-- ============================================================== -->
+
+	<target name="initialize">
+		<echo>${ant.version}</echo>
+		<tstamp>
+			<format property="nu" pattern="yyyy-MM-dd HH:mm:ss" />
+		</tstamp>
+		<echo>${nu}</echo>
+	</target>
+
+	<target name="clean">
+		<delete dir="${build.dir}" />
+		<mkdir dir="${build.classes.dir}" /> 
+	</target>
+
+	<target name="build" depends="initialize, clean" description="build de jar">
+
+		<copy todir="${build.classes.dir}">
+			<fileset dir="${bin.dir}">
+				<include name="**/*.*"/><!-- Onderdrukt lege directories -->
+				<exclude name="WEB-INF/**/*.*" />
+				<patternset refid="jar-excludes" />
+			</fileset>
+		</copy>
+
+		<jar basedir="${build.dir}/classes" destfile="${build.dir}/pu.base.jar" />
+	</target>
+
+</project>
