@@ -9,7 +9,7 @@ import pu.log.log2.Log;
 public class Version
 {
 	public static final boolean DEBUG = false;
-	private static final String VERSION_FILE_NAME = "version.txt";
+	private static final String VERSION_FILE_NAME = "version.id";
 	
 public Version()
 {
