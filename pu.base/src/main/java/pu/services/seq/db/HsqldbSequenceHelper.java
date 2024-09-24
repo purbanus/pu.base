@@ -42,13 +42,13 @@ public void createTable()
 	;
 	getJdbcTemplate().update( sql.toString() );
 
-	System.out.println( "SEQUENCE table created" );
+	//System.out.println( "SEQUENCE table created" );
 }
 
 public void dropTableIfExists()
 {
 	getJdbcTemplate().update( "DROP TABLE " + JdbcLimitHandler.SEQUENCE_TABLE_NAME + " IF EXISTS" );
-	System.out.println( "SEQUENCE table dropped" );
+	//System.out.println( "SEQUENCE table dropped" );
 }
 
 }

@@ -65,10 +65,10 @@ private void checkArraysEqual( String aTestName, String[] aExpected, String[] aA
 }
 
 @Test
-public void test()
+public void testVulUitEnBrengOpLengte()
 {
 	// HIGH deze nog omzetten naar echte tests!
-	String [] s = new String []
+	String [] strings = new String []
 	{
 		"Een",
 		"Twee",
@@ -78,36 +78,64 @@ public void test()
 		"Vijftien",
 		"Zeventien",
 	};
-	System.out.println( StringHelper.streep() );
-	System.out.println( "vulUit(s, #, 5)" );
-	System.out.println( StringHelper.streep() );
-	for ( int x = 0; x < s.length; x++ )
+	String [] expectedVuluit = new String []
 	{
-		System.out.println( s[x] + " ==> |" + StringHelper.vulUit( s[x], '#', 5 ) + '|' );
+		"Een##",
+		"Twee#",
+		"Zeven",
+		"Twaalf",
+		"Dertien",
+		"Vijftien",
+		"Zeventien",
+	};
+	for ( int x = 0; x < strings.length; x++ )
+	{
+		assertEquals( expectedVuluit[x], StringHelper.vulUit( strings[x], '#', 5 ) );
 	}
 
-	System.out.println( StringHelper.streep() ); 
-	System.out.println( "vulUitMetSpaties(s, 5)" );
-	System.out.println( StringHelper.streep() );
-	for ( int x = 0; x < s.length; x++ )
+	String [] expectedVuluitMetSpaties = new String []
 	{
-		System.out.println( s[x] + " ==> |" + StringHelper.vulUitMetSpaties( s[x], 5 ) + '|' );
+		"Een  ",
+		"Twee ",
+		"Zeven",
+		"Twaalf",
+		"Dertien",
+		"Vijftien",
+		"Zeventien",
+	};
+	for ( int x = 0; x < strings.length; x++ )
+	{
+		assertEquals( expectedVuluitMetSpaties[x], StringHelper.vulUitMetSpaties( strings[x], 5 ) );
 	}
 
-	System.out.println( StringHelper.streep() );
-	System.out.println( "brengOpLengte(s, #, 5)" );
-	System.out.println( StringHelper.streep() );
-	for ( int x = 0; x < s.length; x++ )
+	String [] expectedBrengOpLengte = new String []
 	{
-		System.out.println( s[x] + " ==> |" + StringHelper.brengOpLengte( s[x], '#', 5 )  + '|');
+		"Een##",
+		"Twee#",
+		"Zeven",
+		"Twaal",
+		"Derti",
+		"Vijft",
+		"Zeven",
+	};
+	for ( int x = 0; x < strings.length; x++ )
+	{
+		assertEquals( expectedBrengOpLengte[x], StringHelper.brengOpLengte( strings[x], '#', 5 ) );
 	}
 
-	System.out.println( StringHelper.streep() ); 
-	System.out.println( "brengOpLengteMetSpaties(s, 5)" );
-	System.out.println( StringHelper.streep() );
-	for ( int x = 0; x < s.length; x++ )
+	String [] expectedBrengOpLengteMetSpaties = new String []
 	{
-		System.out.println( s[x] + " ==> |" + StringHelper.brengOpLengteMetSpaties( s[x], 5 )  + '|' );
+		"Een  ",
+		"Twee ",
+		"Zeven",
+		"Twaal",
+		"Derti",
+		"Vijft",
+		"Zeven",
+	};
+	for ( int x = 0; x < strings.length; x++ )
+	{
+		assertEquals( expectedBrengOpLengteMetSpaties[x], StringHelper.brengOpLengteMetSpaties( strings[x], 5 ) );
 	}
 
 	testReplaceFirst();

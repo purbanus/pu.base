@@ -129,21 +129,22 @@ public void setUp()
 @Test
 public void testEmpty() throws Exception
 {
-	testName = "Empty";
 	runSyncLoop();
+	String [] expected = {};
 	checkSizes( testName, 0 );
+	assertArrayEquals( expected, slaves.toArray() );
+	assertArrayEquals( expected, masters.toArray() );
 }
 @Test
 public void testMasterEmpty() throws Exception
 {
-	testName = "MasterEmpty";
-
 	slaves.add( new Obj( 1, "Een" ) );
 	slaves.add( new Obj( 2, "Twee" ) );
+	String [] expected = {};
 	runSyncLoop();
-	printElements( testName );
 	checkSizes( testName, 0 );
-	
+	assertArrayEquals( expected, slaves.toArray() );
+	assertArrayEquals( expected, masters.toArray() );
 }
 @Test
 public void testMixed() throws Exception
@@ -162,22 +163,23 @@ public void testMixed() throws Exception
 	slaves.add( new Obj( 6, "Six" ) );
 	slaves.add( new Obj( 7, "Zeven" ) );
 	slaves.add( new Obj( 8, "Eight" ) );
-	
-	printElements( testName + " Before" );
+
+	String expected = "[1-Een, 2-Twee, 5-Vijf, 7-Zeven]";
 	runSyncLoop();
-	printElements( testName + " After" );
 	checkSizes( testName, 4 );
+	assertEquals( expected, slaves.toString() );
+	assertEquals( expected, masters.toString() );
 }
 @Test
 public void testSlaveEmpty() throws Exception
 {
-	testName = "SlaveEmpty";
-
 	masters.add( new Obj( 1, "Een" ) );
 	masters.add( new Obj( 2, "Twee" ) );
+	String expected = "[1-Een, 2-Twee]";
 	runSyncLoop();
-	printElements( testName );
 	checkSizes( testName, 2 );
+	assertEquals( expected, slaves.toString() );
+	assertEquals( expected, masters.toString() );
 }
 @Test
 public void testUpdate() throws Exception
@@ -188,9 +190,10 @@ public void testUpdate() throws Exception
 	masters.add( new Obj( 2, "Twee" ) );
 	slaves.add( new Obj( 1, "Uno" ) );
 	slaves.add( new Obj( 2, "Dos" ) );
-	printElements( testName + " Before" );
+	String expected = "[1-Een, 2-Twee]";
 	runSyncLoop();
-	printElements( testName + " After" );
 	checkSizes( testName, 2 );
+	assertEquals( expected, slaves.toString() );
+	assertEquals( expected, masters.toString() );
 }
 }
