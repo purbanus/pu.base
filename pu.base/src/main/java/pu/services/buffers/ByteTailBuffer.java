@@ -41,6 +41,7 @@ public ByteTailBuffer( int aMaxSize, int aInitialSize )
 }
 /**
  * Retrieves the current contents of the buffer
+ * @@NOG Waarom is dit een array en geen list?
  */
 public synchronized byte [] get()
 {
