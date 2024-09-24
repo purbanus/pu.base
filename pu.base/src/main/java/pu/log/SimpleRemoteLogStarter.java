@@ -3,6 +3,7 @@ package pu.log;
 import pu.log.log2.Log;
 import pu.log.log2.RemoteLogger;
 import pu.log.log2.console.rlog.RLogOutputStream;
+import pu.services.Version;
 /**
  * Tijdelijke class, omdat het even de vraag is waar dit heen moet.
  * Misschien een soort loggertje in nl.mediacenter.application.Log,
@@ -76,6 +77,7 @@ private static void logProperties()
 	logProperty( sb, "user.name            " );
 	logProperty( sb, "user.region          " );
 	logProperty( sb, "user.timezone        " );
+	logPropertyAndValue( sb, "pu.base.version      ", Version.getVersion( "pu" ) );
 
 	Log.info( SimpleRemoteLogStarter.class, sb.toString() );
 
@@ -84,4 +86,9 @@ private static void logProperty( StringBuffer sb, String aProperty )
 {
 	sb.append( aProperty ).append( " " ).append( System.getProperty( aProperty.trim() ) ).append( LINE );
 }
+private static void logPropertyAndValue( StringBuffer sb, String aProperty, String aValue )
+{
+	sb.append( aProperty ).append( " " ).append( aValue ).append( LINE );
+}
+
 }
