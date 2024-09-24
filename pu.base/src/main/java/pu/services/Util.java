@@ -12,7 +12,6 @@ import java.util.List;
 
 import javax.swing.ImageIcon;
 
-import com.ibm.as400.access.Trace;
 ///import nl.mediacenter.table.dm.dec.Expandable;
 
 /**
@@ -490,21 +489,6 @@ public static void safeExit()
 			}
 		}
 	}
-}
-/**
- * Insert the method's description here.
- * Creation date: (19-11-2003 21:29:17)
- * @param b boolean
- */
-public static void setAS400Tracing(boolean b)
-{
-	Trace.setTraceConversionOn ( b );
-	Trace.setTraceDatastreamOn ( b );
-	Trace.setTraceDiagnosticOn ( b );
-	Trace.setTraceErrorOn      ( b );
-	Trace.setTraceInformationOn( b );
-	Trace.setTraceWarningOn    ( b );
-	Trace.setTraceOn           ( b );
 }
 /**
  * Insert the method's description here.
