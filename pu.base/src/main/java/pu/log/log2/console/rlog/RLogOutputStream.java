@@ -24,7 +24,7 @@ public class RLogOutputStream extends OutputStream
 	/**
 	 * Whether tracing is enabled
 	 */
-	public static final boolean TRACE = false;
+	public static final boolean TRACE = true;
 
 	/**
 	 * The name of the remote log server
@@ -144,7 +144,7 @@ public void disconnect() throws IOException
 
 private void doConnect() throws IOException
 {
-	
+	Log.debug( this, getClass().getSimpleName() + " doConnect" );
 	// @@NOG Exception handling:
 	// SocketExceptions: BindException, ConnectException en NoRouteToHostException
 	// Zie verder java.net, bijvoorbeeld ProtocolException
@@ -153,6 +153,7 @@ private void doConnect() throws IOException
 	//       - uitzoeken wat er precies gegooid kan worden
 	//       - etc
 	socket = new Socket( serverName, serverPort );
+	Log.debug( this, getClass().getSimpleName() + " connected, server=" + serverName + " port=" + serverPort );
 
 	// Buffering is no help for the "delay" problems with SwingConsole
 	//socketOut = new BufferedOutputStream( socket.getOutputStream(), 1000 );
@@ -450,21 +451,26 @@ public void write( byte b[] )
 @Override
 public void write( byte b[], int off, int len )
 {
-	if ( isConnected() )
+	String bytes = new String( b );
+	Log.debug( this, " Going to write " + bytes );
+	if ( ! isConnected() )
 	{
-		try
-		{
-			socketOut.write( b, off, len );
-		}
-		catch ( IOException e )
-		{
-			startRecovery( e );
-		}
+		// @@NOG Opsparen indien niet connected? Ingewikkeld, en als er dan weer geconnect
+		//       wordt zijn er ik weet niet hoeveel clients die allemaal hun achterstallige
+		//       100K opsturen, waardoor de server het wat drukjes krijgt. Voorlopig niet.
+		Log.debug( this, getClass().getSimpleName() + " trying to write|" + bytes + "| but not connected" );
+		return;
 	}
-	// @@NOG Opsparen indien niet connected? Ingewikkeld, en als er dan weer geconnect
-	//       wordt zijn er ik weet niet hoeveel clients die allemaal hun achterstallige
-	//       100K opsturen, waardoor de server het wat drukjes krijgt. Voorlopig niet.
+	try
+	{
+		socketOut.write( b, off, len );
+	}
+	catch ( IOException e )
+	{
+		startRecovery( e );
+	}
 }
+
 /**
  * Writes the specified <code>byte</code> to this output stream. 
  * <p>
