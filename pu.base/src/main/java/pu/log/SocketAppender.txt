@@ -1,0 +1,2 @@
+SocketAppender.java is de apppender die je voor rlog wilt gebruiken, alleen,
+hij is helemaal uit log4j gehaald en wij willen alles logback doen
