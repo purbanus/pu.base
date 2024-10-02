@@ -391,8 +391,8 @@ private synchronized void startRecovery( final IOException e )
 {
 	// @@NOG Gevaar: Dit log kan naar RLogOutputStream gaan! Dat zijn wij!
 	//       PanicOutputStream? Of de boel safe maken, b.v. eerst connected = false doen?
-	if ( TRACE ) Log.debug( this, "START RECOVERY" );
 	setConnected( false );
+	if ( TRACE ) Log.debug( this, "START RECOVERY" );
 	Runnable r = new Runnable()
 	{
 		@Override
@@ -452,13 +452,16 @@ public void write( byte b[] )
 public void write( byte b[], int off, int len )
 {
 	String bytes = new String( b );
-	Log.debug( this, " Going to write " + bytes );
+	// Dit veroorzaakt een stack overflow
+	//Log.debug( this, " Going to write " + bytes );
 	if ( ! isConnected() )
 	{
-		// @@NOG Opsparen indien niet connected? Ingewikkeld, en als er dan weer geconnect
-		//       wordt zijn er ik weet niet hoeveel clients die allemaal hun achterstallige
-		//       100K opsturen, waardoor de server het wat drukjes krijgt. Voorlopig niet.
-		Log.debug( this, getClass().getSimpleName() + " trying to write|" + bytes + "| but not connected" );
+		// Opsparen indien niet connected? Ingewikkeld, en als er dan weer geconnect
+		// wordt zijn er ik weet niet hoeveel clients die allemaal hun achterstallige
+		// 100K opsturen, waardoor de server het wat drukjes krijgt. Voorlopig niet.
+		
+		// Dit veroorzaakt een stack overflow
+		//Log.debug( this, getClass().getSimpleName() + " trying to write|" + bytes + "| but not connected" );
 		return;
 	}
 	try
