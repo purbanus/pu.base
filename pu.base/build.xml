@@ -55,7 +55,7 @@
 				<patternset refid="jar-excludes" />
 			</fileset>
 		</copy>
-
+		<!-- @@NOG ook de source copieren -->
 		<jar basedir="${build.dir}/classes" destfile="${build.dir}/pu.base.jar" />
 	</target>
 
