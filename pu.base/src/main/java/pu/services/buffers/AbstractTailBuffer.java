@@ -38,7 +38,7 @@ public abstract class AbstractTailBuffer // TODO implements Serializable
 	private final int maxSize;
 
 	/**
-	 * The current number of bytes in the buffer
+	 * The current number of elements in the buffer
 	 */
 	private int size;
 
@@ -141,23 +141,24 @@ public synchronized boolean isFull()
 	return size == maxSize;
 }
 /**
- * @param i
+ * Sets the head of the buffer (where the next insertion would go)
+ * @param aHead The new head of the buffer
  */
-protected synchronized  void setHead( int i )
+protected synchronized  void setHead( int aHead )
 {
-	head = i;
+	head = aHead;
 }
 
 /**
- * @param i
+ * Sets the size of the buffer, that is the current number of elements in the buffer.
+ * @param aSize The new size
  */
-protected synchronized void setSize(int i)
+protected synchronized void setSize( int aSize )
 {
-	size = i;
+	size = aSize;
 }
 /**
- * This method was created in VisualAge.
- * @return int
+ * @return The current size of the buffer, or the number of elements in the buffer
  */
 public synchronized int size()
 {
