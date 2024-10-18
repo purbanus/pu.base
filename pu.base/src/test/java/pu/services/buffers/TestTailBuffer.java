@@ -4,13 +4,15 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
+import ch.qos.logback.classic.spi.ILoggingEvent;
+
 /**
  */
 public class TestTailBuffer extends AbstractBufferTest
 {
 private void checkCtor1Parm( int aMaxSize )
 {
-	TailBuffer cbb = new TailBuffer( aMaxSize );
+	TailBuffer<String> cbb = new TailBuffer<>( String.class, aMaxSize );
 	checkSizes( cbb, aMaxSize, 0 );
 }
 private void checkCtor1ParmException( int aMaxSize )
@@ -18,7 +20,7 @@ private void checkCtor1ParmException( int aMaxSize )
 	try
 	{
 		@SuppressWarnings( "unused" )
-		TailBuffer cbb = new TailBuffer( aMaxSize );
+		TailBuffer<String> cbb = new TailBuffer<>( String.class, aMaxSize );
 		fail( "Should have thrown an IllegalArgumentException" );
 	}
 	catch ( IllegalArgumentException good )
@@ -27,7 +29,7 @@ private void checkCtor1ParmException( int aMaxSize )
 }
 private void checkCtor2Parm( int aMaxSize, int aInitialSize )
 {
-	TailBuffer cbb = new TailBuffer( aMaxSize, aInitialSize );
+	TailBuffer<String> cbb = new TailBuffer<>( String.class, aMaxSize, aInitialSize );
 	checkSizes( cbb, aMaxSize, 0 );
 }
 private void checkCtor2ParmException( int aMaxSize, int aInitialSize )
@@ -35,22 +37,22 @@ private void checkCtor2ParmException( int aMaxSize, int aInitialSize )
 	try
 	{
 		@SuppressWarnings( "unused" )
-		TailBuffer cbb = new TailBuffer( aMaxSize, aInitialSize );
+		TailBuffer<String> cbb = new TailBuffer<>( String.class, aMaxSize, aInitialSize );
 		fail( "should have thrown an IllegalArgumentException" );
 	}
 	catch ( IllegalArgumentException good )
 	{
 	}
 }
-private void checkSizes( TailBuffer aTailBuffer, int aMaxSize, int aSize )
+private void checkSizes( TailBuffer<String> aTailBuffer, int aMaxSize, int aSize )
 {
 	assertEquals( "maxSize", aMaxSize, aTailBuffer.getMaxSize() );
-	assertEquals( "etSize", aSize, aTailBuffer.size() );
+	assertEquals( "getSize", aSize, aTailBuffer.size() );
 }
 
 /**
  */
-private void checkState( String aTestName, TailBuffer aTailBuffer, boolean aEmpty, boolean aFull, Object [] aContent )
+private void checkState( String aTestName, TailBuffer<String> aTailBuffer, boolean aEmpty, boolean aFull, String [] aContent )
 {
 	assertEquals( "empty" , aEmpty  , aTailBuffer.isEmpty() );
 	assertEquals( "full"  , aFull   , aTailBuffer.isFull() );
@@ -58,9 +60,9 @@ private void checkState( String aTestName, TailBuffer aTailBuffer, boolean aEmpt
 	compare( aTestName, aContent, aTailBuffer.get() );
 }
 
-private Object [] slice( Object [] aObject, int aStart, int aEnd )
+private String [] slice( String [] aObject, int aStart, int aEnd )
 {
-	Object [] ret = new Object [aEnd - aStart + 1];
+	String [] ret = new String [aEnd - aStart + 1];
 	System.arraycopy( aObject, aStart, ret, 0, ret.length );
 	return ret;
 }
@@ -100,22 +102,22 @@ public void testConstructor2()
 @Test
 public void testBasicAdd()
 {
-	TailBuffer buffer = new TailBuffer( 2, 1 );
-	checkState( " empty", buffer, true, false, new Object [] {} );
+	TailBuffer<String> buffer = new TailBuffer<>( String.class, 2, 1 );
+	checkState( " empty", buffer, true, false, new String [] {} );
 	
 	buffer.put( "a" );
-	checkState( " a", buffer, false, false, new Object [] { "a" } );
+	checkState( " a", buffer, false, false, new String [] { "a" } );
 	buffer.put( "b" );
-	checkState( " a,b", buffer, false, true, new Object [] { "a", "b" } );
+	checkState( " a,b", buffer, false, true, new String [] { "a", "b" } );
 	buffer.put( "c" );
-	checkState( " a,b,c", buffer, false, true, new Object [] { "b", "c" } );
+	checkState( " a,b,c", buffer, false, true, new String [] { "b", "c" } );
 }
 @Test
 public void testExpand()
 {
 	final int MAX = 10;
-	TailBuffer buffer = new TailBuffer( MAX, 1 );
-	checkState( " empty", buffer, true, false, new Object [] {} );
+	TailBuffer<String> buffer = new TailBuffer<>( String.class, MAX, 1 );
+	checkState( " empty", buffer, true, false, new String [] {} );
 	
 	String [] data = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m" };
 	for ( int x = 0; x < data.length; x++ )
@@ -131,5 +133,46 @@ public void testExpand()
 		}
 		checkState( "#" + x, buffer, empty, full, slice( data, start, x ) );
 	}
+}
+@Test
+public void testClear()
+{
+	TailBuffer<String> buffer = new TailBuffer<>( String.class, 100 );
+	checkState( "empty", buffer, true, false, new String [] {} );
+	
+	String [] data = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m" };
+	for ( int x = 0; x < data.length; x++ )
+	{
+		buffer.put( data[x] );
+	}
+	checkState( " full", buffer, false, false, buffer.get() );
+	assertEquals( "empty" , false  , buffer.isEmpty() );
+	assertEquals( "full"  , false  , buffer.isFull() );
+	assertEquals( "length", data.length, buffer.size() );
+	compare( "clear", data, buffer.get() );
+
+	buffer.clear();
+	checkState( "empty", buffer, true, false, new String [] {} );
+}
+@Test
+public void testGet()
+{
+	TailBuffer<String> buffer = new TailBuffer<>( String.class, 100 );
+	checkState( "empty", buffer, true, false, new String [] {} );
+	
+	String [] data = { "a", "b", "c", "d", "e", "f", "g", "h", "i", "j", "k", "l", "m" };
+	for ( int x = 0; x < data.length; x++ )
+	{
+		buffer.put( data[x] );
+	}
+	checkState( " full", buffer, false, false, buffer.get() );
+	assertEquals( "empty" , false  , buffer.isEmpty() );
+	assertEquals( "full"  , false  , buffer.isFull() );
+	assertEquals( "length", data.length, buffer.size() );
+	compare( "get", data, buffer.get() );
+
+	String [] strings = buffer.get();
+	compare( "get", data, strings );
+
 }
 }
