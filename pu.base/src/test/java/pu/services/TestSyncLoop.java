@@ -68,6 +68,7 @@ public void checkSizes(String aTestName, int aSize )
 	assertEquals( testName + " master size", aSize, masters.size() );
 	assertEquals( testName + " slave size" , aSize, slaves.size() );
 }
+@SuppressWarnings( "unused" )
 private void printElements( String aTestName )
 {
 	/*********/

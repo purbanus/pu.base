@@ -4,10 +4,6 @@ import static org.junit.Assert.*;
 
 import org.junit.Test;
 
-import ch.qos.logback.classic.spi.ILoggingEvent;
-
-/**
- */
 public class TestTailBuffer extends AbstractBufferTest
 {
 private void checkCtor1Parm( int aMaxSize )

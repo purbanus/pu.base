@@ -451,6 +451,7 @@ public void write( byte b[] )
 @Override
 public void write( byte b[], int off, int len )
 {
+	@SuppressWarnings( "unused" )
 	String bytes = new String( b );
 	// Dit veroorzaakt een stack overflow
 	//Log.debug( this, " Going to write " + bytes );
