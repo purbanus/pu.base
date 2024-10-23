@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <project name="pu.base" basedir="." default="build"
+	xmlns:ivy="antlib:org.apache.ivy.ant"
 >
+	<!-- <taskdef ivy:publish="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" /> -->
+
 	<property file="build.properties" />
 
 	<patternset id="jar-excludes">
@@ -57,6 +60,12 @@
 		</copy>
 		<!-- @@NOG ook de source copieren -->
 		<jar basedir="${build.dir}/classes" destfile="${build.dir}/pu.base.jar" />
+		
+		<!--
+		<ivy:publish resolver="local" pubrevision="1.0">
+			<artifacts pattern="build/pu.base.jar" />
+		</ivy:publish>
+		-->
 	</target>
 
 </project>
