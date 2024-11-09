@@ -13,7 +13,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/JavaSE-17">
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-21-openjdk-amd64">
 		<attributes>
 			<attribute name="module" value="true"/>
 			<attribute name="maven.pomderived" value="true"/>
@@ -21,9 +21,7 @@
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/5"/>
 	<classpathentry exported="true" kind="lib" path="lib/mckoidb-1.0.3.jar" sourcepath="lib/mckoidb-1.0.3-src.zip"/>
-	<classpathentry kind="lib" path="/alg.lib/lib/iris-standaard/jt400.jar"/>
-	<classpathentry exported="true" kind="con" path="org.eclipse.jdt.USER_LIBRARY/iris-standaard"/>
-	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Tomcat 9">
+	<classpathentry kind="con" path="org.eclipse.jst.server.core.container/org.eclipse.jst.server.tomcat.runtimeTarget/Tomcat 10.1">
 		<attributes>
 			<attribute name="owner.project.facets" value="jst.utility"/>
 		</attributes>
