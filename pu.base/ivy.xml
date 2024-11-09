@@ -55,8 +55,9 @@
 		<dependency org="ch.qos.logback" name="logback-classic" rev="1.4.14"/>
 		<dependency org="ch.qos.logback" name="logback-access" rev="1.4.14"/>
 
-        <dependency org="jmock" name="jmock" rev="1.1.0"/>
-        <dependency org="jmock" name="jmock-cglib" rev="1.1.0"/>
+		<dependency org="jmock" name="jmock" rev="1.1.0"/>
+		<dependency org="jmock" name="jmock-cglib" rev="1.1.0"/>
+		<dependency org="org.easymock" name="easymock" rev="3.3"/>
 		<dependency org="com.google.code.findbugs" name="findbugs" rev="3.0.1" /><!-- Zodat je FB-fouten kunt onderdrukken -->
 
 		<dependency org="org.apache.commons" name="commons-collections4" rev="4.4"/>
