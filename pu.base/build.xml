@@ -3,7 +3,7 @@
 <project name="pu.base" basedir="." default="build"
 	xmlns:ivy="antlib:org.apache.ivy.ant"
 >
-	<!-- <taskdef ivy:publish="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" /> -->
+	<taskdef ivy:publish="org/apache/ivy/ant/antlib.xml" uri="antlib:org.apache.ivy.ant" />
 
 	<property file="build.properties" />
 
@@ -29,7 +29,8 @@
 		<echo message="" />
 		<echo message="Available targets are:" />
 		<echo message="" />
-		<echo message="build --> Build the application" />
+		<echo message="build   --> Build the application" />
+		<echo message="makepom --> Convert ivy.xml to pom" />
 	</target>
 
 	<!-- ============================================================== -->
@@ -66,6 +67,14 @@
 			<artifacts pattern="build/pu.base.jar" />
 		</ivy:publish>
 		-->
+	</target>
+
+	<target name="makepom" depends="initialize, clean" description="convert ivy.xml to pom">
+		<ivy:makepom ivyfile="ivy.xml" pomfile="pomfromivy.xml">
+<!--		   <mapping conf="default" scope="compile"/>
+		   <mapping conf="runtime" scope="runtime"/>
+-->		</ivy:makepom>
+
 	</target>
 
 </project>
