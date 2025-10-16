@@ -22,7 +22,8 @@ long totalSize = 0;
 private final DecimalFormat intFormat;
 public static void main( String [] args )
 {
-	new DirTeller().printDirSize( "/mnt/nas2/photos/vrouwen/" );
+//	new DirTeller().printDirSize( "/mnt/nas4/videos/vrouwen/" );
+	new DirTeller().printDirSize( "/media/purbanus/5TB Seagate/Videos/vrouwen/" );
 }
 public DirTeller()
 {
