@@ -1,12 +1,11 @@
 package pu.log.console.comm;
 
-import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
  * @@NOG Veel meer testen!
  */
-@SuppressWarnings( "unused" )
+//@SuppressWarnings( "unused" )
 public class TestMulticastOutputStreamException
 {
 @Test
