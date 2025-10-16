@@ -120,11 +120,6 @@ public String toString()
 	return super.toString();
 }
 }
-public static String getLineSeparator()
-{
-	return System.getProperty( "line.separator" );
-}
-
 public MatrixFormatter() {
 	super();
 }
