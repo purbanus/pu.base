@@ -5,6 +5,8 @@ import java.util.Collection;
 import java.util.Iterator;
 import java.util.List;
 
+import org.apache.commons.lang3.StringUtils;
+
 public class MatrixFormatter
 {
 private final List<Line> lines = new ArrayList<>();
@@ -29,12 +31,8 @@ public String toString()
 public static final Alignment ALIGN_LEFT    = new Alignment( "LEFT"    );
 public static final Alignment ALIGN_CENTER  = new Alignment( "CENTER"  );
 public static final Alignment ALIGN_RIGHT   = new Alignment( "RIGHT"   );
-//	public static final Alignment ALIGN_UNKNOWN = new Alignment( "UNKNOWN" );
 
 public static final int WIDTH_UNKNOWN = -1;
-
-//	private Vector tabs = new Vector();
-//	private Vector alignments = new Vector();
 
 private abstract class Line
 {
@@ -111,7 +109,7 @@ public String getOutput()
 	for ( int x = 0; x < columns.length; x++ )
 	{
 		sb.append( formatColumn( x, columns[x] ) );
-		sb.append( StringHelper.spaties( getColumnSpacing() ) );
+		sb.append( StringUtils.repeat( ' ', getColumnSpacing() ) );
 	}
 	return sb.toString();
 }
@@ -122,6 +120,11 @@ public String toString()
 	return super.toString();
 }
 }
+public static String getLineSeparator()
+{
+	return System.getProperty( "line.separator" );
+}
+
 public MatrixFormatter() {
 	super();
 }
@@ -176,7 +179,7 @@ private static String createTabbedString( Collection<String> aCollection )
 	{
 		strings[x] = String.valueOf( it.next() );
 	}
-	return StringHelper.implode( strings, "\t" );
+	return StringUtils.join( strings, "\t" );
 }
 private String formatColumn( int aColumn, String aContents )
 {
@@ -185,16 +188,16 @@ private String formatColumn( int aColumn, String aContents )
 
 	if ( def.getAlignment() == ALIGN_LEFT )
 	{
-		return c + StringHelper.spaties( def.getWidth() - c.length() );
+		return c + StringUtils.repeat( ' ', def.getWidth() - c.length() );
 	}
 
 	if ( def.getAlignment() == ALIGN_RIGHT )
 	{
-		return  StringHelper.spaties( def.getWidth() - c.length() ) + c;
+		return  StringUtils.repeat( ' ', def.getWidth() - c.length() ) + c;
 	}
 
 	int startSpace = ( def.getWidth() - c.length() ) / 2;
-	return  StringHelper.spaties( startSpace ) + c + StringHelper.spaties( def.getWidth() - c.length() - startSpace );
+	return  StringUtils.repeat( ' ', startSpace ) + c + StringUtils.repeat( ' ', def.getWidth() - c.length() - startSpace );
 }
 private List<MatrixFormatterColumnDef> getColumnDef()
 {
