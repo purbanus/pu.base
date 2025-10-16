@@ -17,7 +17,7 @@ public void testVersion()
 @Test
 public void testPrintVersion()
 {
-	assertEquals( "0.0.0", Version.getVersion( "pu" ) );
+	assertEquals( "1.0.0", Version.getVersion( "pu" ) );
 }
 
 
