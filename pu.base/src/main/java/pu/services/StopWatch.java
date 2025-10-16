@@ -1,5 +1,8 @@
 package pu.services;
 
+import java.time.Duration;
+import java.time.Instant;
+
 /**
  * A simple stopwatch to time operations. You can query the time elapsed since creation or
  * since <code>reset</code>, whichever came last, with <code>getElapsed</code>, and you can time the
@@ -7,8 +10,8 @@ package pu.services;
  */
 public class StopWatch
 {
-	private long start;
-	private long lap; 
+	private Instant start;
+	private Instant lap; 
 /**
  * Creates a new StopWatch.
  */
@@ -21,9 +24,9 @@ public StopWatch()
  * Returns the elapsed time, in milliseconds, since this StopWatch was created
  * or since <code>reset</code> was called, whichever came last.
  */
-public long getElapsed()
+public long getElapsedMillis()
 {
-	return System.currentTimeMillis() - start;
+	return Duration.between(start, Instant.now() ).toMillis();
 }
 /**
  * Returns the elapsed time, in milliseconds, since this StopWatch was created
@@ -31,7 +34,23 @@ public long getElapsed()
  */
 public String getElapsedMs()
 {
-	return getElapsed() + "ms";
+	return getElapsedMillis() + "ms";
+}
+/**
+ * Returns the elapsed time, in nanoseconds, since this StopWatch was created
+ * or since <code>reset</code> was called, whichever came last.
+ */
+public long getElapsedNanos()
+{
+	return Duration.between(start, Instant.now() ).toNanos();
+}
+/**
+ * Returns the elapsed time, in nanoseconds, since this StopWatch was created
+ * or since <code>reset</code> was called, whichever came last.
+ */
+public String getElapsedNs()
+{
+	return getElapsedNanos() + "ns";
 }
 /**
  * Returns the time, in milliseconds, that has passed since the previous
@@ -56,15 +75,25 @@ public String getElapsedMs()
  *	}
  * </pre>
  */
-public long getLapTime()
+public long getLapTimeMillis()
 {
-	long prevLap = lap;
-	lap = System.currentTimeMillis();
-	return lap - prevLap; 
+	Instant prevLap = lap;
+	lap = Instant.now();
+	return Duration.between(prevLap, lap ).toMillis();
 }
 public String getLapTimeMs()
 {
-	return getLapTime() + "ms"; 
+	return getLapTimeMillis() + "ms"; 
+}
+public long getLapTimeNanos()
+{
+	Instant prevLap = lap;
+	lap = Instant.now();
+	return Duration.between(prevLap, lap ).toNanos();
+}
+public String getLapTimeNs()
+{
+	return getLapTimeNanos() + "ns"; 
 }
 /**
  * Resets the start time to now, and starts a new lap. This code
@@ -72,7 +101,7 @@ public String getLapTimeMs()
  */
 public void reset()
 {
-	start = System.currentTimeMillis();
+	start = Instant.now();
 	lap = start;
 }
 }
