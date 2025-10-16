@@ -33,6 +33,15 @@ public int getTo()
 {
 	return to;
 }
+public int getMinimum()
+{
+	return from;
+}
+
+public int getMaximum()
+{
+	return to;
+}
 
 
 /**

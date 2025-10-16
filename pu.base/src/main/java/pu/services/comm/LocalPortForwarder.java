@@ -134,7 +134,7 @@ public void stop()
     	}
 	}
 }
-@SuppressWarnings( "resource" )
+//@SuppressWarnings( "resource" )
 @Override
 public void run()
 {

@@ -9,6 +9,8 @@ import java.util.List;
 import java.util.StringTokenizer;
 
 import javax.swing.JLabel;
+
+import org.apache.commons.lang3.StringUtils;
 public class StringHelper implements Serializable
 {
 	// Effe lache: Label heeft andere getallen voor LEFT, CENTER en RIGHT dan JLabel :-(
@@ -302,9 +304,9 @@ public static String[] explode( String s, String delim )
  * @param aSeparator The separator string
  * @exception IllegalArgumentException if the string or the delimiter is <code>null</code>
  */
-public static String[] explode2( String s, String aSeparator )
+public static String[] explode2( String aString, String aSeparator )
 {
-	List<String> list = explode2ToList( s, aSeparator );
+	List<String> list = explode2ToList( aString, aSeparator );
 	String [] sa = new String[list.size()];
 	return list.toArray( sa );
 }
@@ -899,7 +901,7 @@ private static String showDiff_ReportLine( String lString, int lPos, boolean lMi
  */
 public static String spaties( int lengte )
 {
-	return repChar ( ' ', lengte );
+	return StringUtils.repeat( ' ', lengte );
 }
 /**
  * Verdeelt een String in regels van een bepaalde <code>regelLengte</code> lang.
@@ -1060,7 +1062,8 @@ public static String trimLeading(String s)
   * All characters that have codes less than or equal to
   * <code>'&#92;u0020'</code> (the space character) are considered to be
   * white space.
-  *
+  * Apache commons lang3 StringUtils heeft trim() maar dat haalt whitespace aan beide zijden van een string weg, 
+  * en dat willen we niet.
   * @return  this string, with trailing white space removed
   */
 public static String trimTrailing(String s)

@@ -5,7 +5,7 @@ import static org.junit.Assert.*;
 import org.junit.Test;
 
 /**
- * Tests the ColumnGrid class
+ * Tests the ArrayHelper class
  */
 public class TestArrayHelper
 {

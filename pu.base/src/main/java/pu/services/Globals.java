@@ -23,6 +23,7 @@ public class Globals implements Serializable
 //	private DateFormat   dateFormatter = DateFormat.getDateInstance( DateFormat.MEDIUM );
 	private static final char DATE_SEPARATOR = '-';
 	private static final char TIME_SEPARATOR = ':';
+	private DateFormat   dateFormatterYearMonthDay = new SimpleDateFormat( "yyyy" + DATE_SEPARATOR + "MM" + DATE_SEPARATOR + "dd" );
 	private DateFormat   dateFormatterMonthYear  = new SimpleDateFormat( "MM" + DATE_SEPARATOR + "yyyy" );
 	private DateFormat   dateFormatterZonderJaar = new SimpleDateFormat( "dd" + DATE_SEPARATOR + "MM" );
 	private DateFormat   dateFormatterKort       = new SimpleDateFormat( "dd" + DATE_SEPARATOR + "MM" + DATE_SEPARATOR + "yy" );
@@ -45,22 +46,19 @@ private Globals()
 	super();
 }
 
+public static DateFormat getDateFormatterYearMonthDay()
+{
+	return getInstance().dateFormatterYearMonthDay;
+}
+
 public static DateFormat getDateTimeFormatterZonderJaar()
 {
 	return getInstance().dateTimeFormatterZonderJaar;
 }
-/**
- * This method was created in VisualAge.
- * @return NumerFormat
- */
 public static NumberFormat getBigDecimalFormatter()
 {
 	return( getBigDecimalFormatter( 9, 2 ) );
 }
-/**
- * This method was created in VisualAge.
- * @return NumerFormat
- */
 public static NumberFormat getBigDecimalFormatter(int aMaxLengte, int aDecPos)
 {
 	NumberFormat format = NumberFormat.getNumberInstance();
@@ -82,27 +80,15 @@ public static NumberFormat getBigDecimalFormatter(int aMaxLengte, int aDecPos)
  
 	return format;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getDateFormatter()
 {
 	// Voorlopig is dit formaat voor alle datums gelijk.
 	return getDateFormatterLang();
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getDateFormatterKort()
 {
 	return getInstance().dateFormatterKort;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getDateFormatterLang()
 {
 	return getInstance().dateFormatterLang;
@@ -116,18 +102,10 @@ public static DateFormat getDateFormatterMonthYear()
 {
 	return getInstance().dateFormatterMonthYear;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getDateFormatterZonderJaar()
 {
 	return getInstance().dateFormatterZonderJaar;
 }
-/**
- * This method was created in VisualAge.
- * @return char
- */
 public static char getDateSeparator()
 {
 	return getInstance().DATE_SEPARATOR; // Er is geen eenvoudige manier om achter de separator te komen, dus maar effe zo.
@@ -139,56 +117,33 @@ public static char getDateSeparator()
 public static Globals getInstance()
 {
 	if ( instance == null )
+	{
 		instance = new Globals();
+	}
 	return instance;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.NumberFormat
- */
 public static NumberFormat getIntegerFormatter()
 {
 	NumberFormat format = NumberFormat.getNumberInstance();
 	format.setParseIntegerOnly(true);
 	return format;
 }
-/**
- * This method was created in VisualAge.
- * @return int
- */
 public static int getJaarWindow()
 {
 	return JAAR_WINDOW;
 }
-/**
- * This method was created in VisualAge.
- * @return int
- */
 public static int getMaximumJaar()
 {
 	return JAAR_MAXIMUM;
 }
-/**
- * This method was created in VisualAge.
- * @return int
- */
 public static int getMinimumJaar()
 {
 	return JAAR_MINIMUM;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getTimeFormatter()
 {
 	return getInstance().timeFormatter;
 }
-/**
- * Insert the method's description here.
- * Creation date: (8-11-02 0:17:53)
- * @return java.text.DateFormat
- */
 public static DateFormat getTimeFormatterForFileNames()
 {
 	Globals glob = getInstance();
@@ -201,26 +156,14 @@ public static DateFormat getTimeFormatterForFileNames()
 	}
 	return glob.timeFormatterForFileNames;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getTimeFormatterKort()
 {
 	return getInstance().timeFormatterKort;
 }
-/**
- * This method was created in VisualAge.
- * @return java.text.DateFormat
- */
 public static DateFormat getTimeFormatterZonderSep()
 {
 	return getInstance().timeFormatterZonderSep;
 }
-/**
- * This method was created in VisualAge.
- * @return char
- */
 public static char getTimeSeparator()
 {
 	return getInstance().TIME_SEPARATOR; 
