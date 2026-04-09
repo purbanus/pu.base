@@ -46,21 +46,29 @@
 	</target>
 
 	<target name="clean">
-		<delete dir="${build.dir}" />
-		<mkdir dir="${build.classes.dir}" /> 
+		<delete dir="${build.classes.dir}" />
+		<!--@@NOG Moet die src.dir niet juist verwijderd worden??-->
+		<mkdir dir="${build.src.dir}" /> 
 	</target>
 
 	<target name="build" depends="initialize, clean" description="build de jar">
 
 		<copy todir="${build.classes.dir}">
-			<fileset dir="${bin.dir}">
+			<fileset dir="${target.classes.dir}">
 				<include name="**/*.*"/><!-- Onderdrukt lege directories -->
 				<exclude name="WEB-INF/**/*.*" />
 				<patternset refid="jar-excludes" />
 			</fileset>
 		</copy>
-		<!-- @@NOG ook de source copieren -->
 		<jar basedir="${build.dir}/classes" destfile="${build.dir}/pu.base.jar" />
+		<copy todir="${build.src.dir}">
+			<fileset dir="${src.dir}">
+				<include name="**/*.*"/><!-- Onderdrukt lege directories -->
+				<exclude name="WEB-INF/**/*.*" />
+				<patternset refid="jar-excludes" />
+			</fileset>
+		</copy>
+		<jar basedir="${build.src.dir}" destfile="${build.dir}/pu.base.src.jar" />
 		
 		<!--
 		<ivy:publish resolver="local" pubrevision="1.0">
