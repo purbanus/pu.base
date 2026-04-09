@@ -2,6 +2,9 @@ package pu.services;
 
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Before;
 import org.junit.Test;
 
@@ -192,4 +195,56 @@ public void testOverlapsWith()
 		}
 	}
 }
+@Test
+public void testIterator()
+{
+	Range myRange = new Range( 0, 9 );
+	List<Integer> actual = new ArrayList<>(); 
+	for ( int x : myRange )
+	{
+		actual.add( x );
+	}
+	List<Integer> expected = List.of( 0, 1, 2, 3, 4, 5, 6, 7, 8, 9 );
+	assertEquals( expected, actual );
+}
+//@Test
+public void testIteratorPerformance()
+{
+	// Het scheelt dus een factor 2,5
+	final int MAXIMUM = 1_000_000;
+	StopWatch timer = new StopWatch();
+	for ( int x = 0; x < 10; x++ )
+	{
+		int total = testIteratorPerformanceNormalLoop( MAXIMUM );
+	}
+	System.out.println( timer.getElapsedMs() );
+	Range myRange = new Range( 0, MAXIMUM );
+	timer = new StopWatch();
+	for ( int x = 0; x < 10; x++ )
+	{
+		int total = testIteratorPerformanceRangeLoop( myRange );
+	}
+	System.out.println( timer.getElapsedMs() );
+}
+
+private int testIteratorPerformanceNormalLoop( int aMaximum )
+{
+	int total = 0;
+	for ( int x = 0; x < aMaximum; x++ )
+	{
+		total += x;
+	}
+	return total;
+}
+private int testIteratorPerformanceRangeLoop( Range aMyRange )
+{
+	int total = 0;
+	for ( int x : aMyRange )
+	{
+		total += x;
+	}
+	return total;
+}
+
+
 }
