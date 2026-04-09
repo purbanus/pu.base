@@ -1,9 +1,11 @@
 package pu.services;
 
+import java.util.Iterator;
+
 /**
  * De versie in mc.base laat een empty range niet toe, en empty ranges zijn erg handig
  */
-public class Range implements Cloneable
+public class Range implements Cloneable, Iterable<Integer>
 {
 	public static final Range EMPTY_RANGE = new Range( 1, 0 );
 
@@ -128,6 +130,33 @@ public Range intersectWith( Range aRange )
 public boolean overlapsWith( Range aRange )
 {
 	return aRange.to >= from && aRange.from <= to;
+}
+@Override
+public Iterator<Integer> iterator()
+{
+	Iterator<Integer> it = new Iterator<>()
+	{
+		private int currentIndex = getMinimum();
+	
+		@Override
+		public boolean hasNext()
+		{
+			return currentIndex <= getMaximum();
+		}
+	
+		@Override
+		public Integer next()
+		{
+			return currentIndex++;
+		}
+	
+		@Override
+		public void remove()
+		{
+			throw new UnsupportedOperationException();
+		}
+	};
+	return it;
 }
 
 @Override
